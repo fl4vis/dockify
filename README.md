@@ -30,9 +30,9 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 | `check_installed` | Checks if Docker is already installed. |
 | `check_version` | Displays the currently installed Docker version. |
 | `check_repo_versions` | Shows available Docker versions from the repository. |
-| `upgrade` | Upgrades Docker to a specific version. **Require** `version` variable. |
+| `upgrade` | Upgrades Docker to a specific version. **Required** `version` variable. |
 | `uninstall_engine` | Uninstalls Docker Engine, CLI, containerd, and Docker Compose. |
-| `add_docker_user` | Adds a non-root user to the Docker group. **Require** `user` variable. |
+| `add_docker_user` | Adds a non-root user to the Docker group. **Required** `user` variable. |
 
 <br>
 
