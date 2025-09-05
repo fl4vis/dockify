@@ -1,0 +1,21 @@
+- name: Skip role if version is not defined
+  ansible.builtin.debug:
+    msg: "Docker version variable not defined in playbook, skipping role."
+  when: version is not defined
+  ignore_errors: true
+  changed_when: false
+
+- name: Stop role if version is not defined
+  ansible.builtin.meta: end_play
+  when: version is not defined
+
+- name: Skip role if version is not defined or invalid
+  ansible.builtin.debug:
+    msg: "Docker version not defined or invalid (must be x.y.z), skipping role."
+  when: version is not defined or version is not match('^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$')
+  ignore_errors: true
+  changed_when: false
+
+- name: Stop role if version is not defined or invalid
+  ansible.builtin.meta: end_play
+  when: version is not defined or version is not match('^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$')

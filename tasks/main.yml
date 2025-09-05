@@ -1,0 +1,12 @@
+- name: Dockify task
+  include_tasks: "{{ task_map[action] }}"
+  vars:
+    task_map:
+      check_installed: check_installed.yml
+      check_version: check_version.yml
+      check_repo_versions: check_repo_versions.yml
+      install: install.yml
+      upgrade: upgrade.yml
+      uninstall_engine: uninstall_engine.yml
+      add_docker_user: add_docker_user.yml
+  when: action is defined and action in task_map

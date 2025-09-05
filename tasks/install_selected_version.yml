@@ -1,0 +1,21 @@
+- name: Selected Docker Repo Version
+  ansible.builtin.shell: apt-cache madison docker-ce | awk '{ print $3 }' | grep "{{version}}"
+  register: selected_docker_version
+  ignore_errors: true
+
+- name: Install selected Docker version
+  ansible.builtin.apt:
+    name:
+      - "docker-ce={{ selected_docker_version.stdout | trim }}"
+      - "docker-ce-cli={{ selected_docker_version.stdout | trim }}"
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    install_recommends: yes
+    force: yes
+  become: true
+  when:
+    - version is defined
+    - selected_docker_version.stdout is defined
+    - selected_docker_version.stdout != ""

@@ -1,0 +1,12 @@
+
+- name: Check Docker Repo Version
+  ansible.builtin.shell: apt-cache madison docker-ce | awk '{ print $3 }'
+  register: docker_repo_versions
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+
+- name: Show Docker Repo Versions
+  ansible.builtin.debug:
+      msg: "{{ docker_repo_versions.stdout_lines if docker_repo_versions.rc == 0 else 'Docker is not installed' }}"
