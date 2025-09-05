@@ -42,10 +42,12 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 
 <br>
 
-## Install / Uninstall
-
+## Install / Update / Uninstall 
+ 
 ```bash
 ansible-galaxy install git+https://github.com/fl4vis/dockify.git
+
+ansible-galaxy install -f git+https://github.com/fl4vis/dockify.git
 
 ansible-galaxy remove dockify
 ```
