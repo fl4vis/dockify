@@ -14,11 +14,11 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 
 ## Role Variables
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `action` | Determines which operation the role will perform. Supported actions: `install`, `check_installed`, `check_version`, `check_repo_versions`, `upgrade`, `uninstall_engine`, `add_docker_user` | Yes | - |
-| `version` | Docker version to install or upgrade to (format: `x.y.z`). Required for `install` and `upgrade` actions | No | - |
-| `user` | System user to add to the Docker group. Required for `add_docker_user` action | No | - |
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `action` | Determines which operation the role will perform. Supported actions: `install`, `check_installed`, `check_version`, `check_repo_versions`, `upgrade`, `uninstall_engine`, `add_docker_user` | Yes |
+| `version` | Docker version to install or upgrade to (format: `x.y.z`). Required for `install` and `upgrade` actions | No |
+| `user` | System user to add to the Docker group. Required for `add_docker_user` action | No |
 
 <br>
 
@@ -39,6 +39,16 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 ## Dependencies
 
 - No external roles are required.
+
+<br>
+
+## Install / Uninstall
+
+```bash
+ansible-galaxy install git+https://github.com/fl4vis/dockify.git
+
+ansible-galaxy remove dockify
+```
 
 <br>
 
