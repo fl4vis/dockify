@@ -1,38 +1,80 @@
-Role Name
-=========
+# Dockify 🐋
 
-A brief description of the role goes here.
+Manage Docker installation, versions, upgrades, uninstallation, and user management on Linux hosts using Ansible.
 
-Requirements
-------------
+<br>
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+- Tested Ubuntu 22.04 / 24.04. Mint 21.3
+- Requires `apt` on target hosts.
+- Ensure the user running the playbook has sudo privileges if installing, upgrading, or managing Docker users.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+<br>
 
-Dependencies
-------------
+## Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `action` | Determines which operation the role will perform. Supported actions: `install`, `check_installed`, `check_version`, `check_repo_versions`, `upgrade`, `uninstall_engine`, `add_docker_user` | Yes | - |
+| `version` | Docker version to install or upgrade to (format: `x.y.z`). Required for `install` and `upgrade` actions | No | - |
+| `user` | System user to add to the Docker group. Required for `add_docker_user` action | No | - |
 
-Example Playbook
-----------------
+<br>
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Supported Actions
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+| Action | Description |
+|--------|-------------|
+| `install` | Installs a specific Docker version. Requires `version` variable. |
+| `check_installed` | Checks if Docker is already installed. |
+| `check_version` | Displays the currently installed Docker version. |
+| `check_repo_versions` | Shows available Docker versions from the repository. |
+| `upgrade` | Upgrades Docker to a specific version. Requires `version` variable. |
+| `uninstall_engine` | Uninstalls Docker Engine, CLI, containerd, and Docker Compose. |
+| `add_docker_user` | Adds a non-root user to the Docker group. Requires `user` variable. |
 
-License
--------
+<br>
 
-BSD
+## Dependencies
 
-Author Information
-------------------
+- No external roles are required.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+<br>
+
+## Example Playbook
+
+```yaml
+- hosts: all
+  roles:
+    - role: dockify
+      vars:
+        action: install
+        version: "28.3.1"
+
+    - role: dockify
+      vars:
+        action: check_installed
+
+    - role: dockify
+      vars:
+        action: check_version
+
+    - role: dockify
+      vars:
+        action: check_repo_versions
+
+    - role: dockify
+      vars:
+        action: upgrade
+        version: "28.3.3"
+
+    - role: dockify
+      vars:
+        action: uninstall_engine
+
+    - role: dockify
+      vars:
+        action: add_docker_user
+        user: "{{ ansible_user }}"
+```
