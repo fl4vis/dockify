@@ -31,12 +31,7 @@
       {% else %}
         {{ ansible_distribution_release }}
       {% endif %}
-    docker_os: >-
-      {% if ansible_distribution == 'Debian' %}
-        debian
-      {% else %}
-        ubuntu
-      {% endif %}
+    docker_os: "{{ 'debian' if ansible_distribution == 'Debian' else 'ubuntu' }}"
 
 - name: Create keyrings directory
   ansible.builtin.file:
