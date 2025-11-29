@@ -6,7 +6,7 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 
 ## Requirements
 
-- Tested on: [ Ubuntu 22.04 / 24.04, Mint 21.3 ]
+- Tested on: [ Ubuntu 22.04 / 24.04, Mint 21.3, Debian trixie ]
 - Requires `apt` on target hosts.
 - Ensure the user running the playbook has `ansible_become_pass:<password>` 
 
