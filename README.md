@@ -45,10 +45,13 @@ Manage Docker installation, versions, upgrades, uninstallation, and user managem
 ## Install / Update / Uninstall 
  
 ```bash
+# Install
 ansible-galaxy install git+https://github.com/fl4vis/dockify.git
 
+# Update
 ansible-galaxy install -f git+https://github.com/fl4vis/dockify.git
 
+# Uninstall
 ansible-galaxy remove dockify
 ```
 
