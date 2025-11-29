@@ -1,12 +1,13 @@
-arch_map:
-  x86_64: amd64
-  aarch64: arm64
-  ppc64le: ppc64el
-  i686: i386
-
 mint_to_ubuntu:
-  una: jammy       
-  vanessa: jammy   
-  virginia: jammy   
-  ulyssa: focal    
-  tara: focal      
+  virginia: jammy    # Mint 21.3 → Ubuntu 22.04
+  vera: jammy        # Mint 21.2 → Ubuntu 22.04
+  victoria: jammy    # Mint 21.1 → Ubuntu 22.04
+  vanessa: jammy     # Mint 21 → Ubuntu 22.04
+  una: focal         # Mint 20.3 → Ubuntu 20.04
+  ulyssa: focal      # Mint 20.2 → Ubuntu 20.04
+  uma: focal         # Mint 20.1 → Ubuntu 20.04
+  ulyana: focal      # Mint 20 → Ubuntu 20.04
+  tara: bionic       # Mint 19 → Ubuntu 18.04
+  tessa: bionic      # Mint 19.1 → Ubuntu 18.04
+  tina: bionic       # Mint 19.2 → Ubuntu 18.04
+  tricia: bionic     # Mint 19.3 → Ubuntu 18.04

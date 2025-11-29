@@ -11,3 +11,6 @@ galaxy_info:
     - name: Mint
       versions:
         - virginia
+    - name: Debian
+      versions:
+        - trixie

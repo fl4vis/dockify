@@ -23,13 +23,19 @@
   become: true
   ignore_errors: yes 
 
-- name: Set Ubuntu codename for Docker repo
+- name: Set Distro codename for Docker repo
   set_fact:
-    docker_ubuntu_codename: >-
+    docker_distro_codename: >-
       {% if ansible_distribution == 'Linux Mint' %}
-        {{ mint_to_ubuntu[ansible_lsb.codename] }}
+        {{ mint_to_ubuntu[ansible_distribution_release] }}
       {% else %}
-        {{ ansible_lsb.codename }}
+        {{ ansible_distribution_release }}
+      {% endif %}
+    docker_os: >-
+      {% if ansible_distribution == 'Debian' %}
+        debian
+      {% else %}
+        ubuntu
       {% endif %}
 
 - name: Create keyrings directory
@@ -41,17 +47,37 @@
 
 - name: Download Docker GPG key
   ansible.builtin.get_url: 
-    url: https://download.docker.com/linux/ubuntu/gpg 
+    url: https://download.docker.com/linux/{{ docker_os }}/gpg 
     dest: /etc/apt/keyrings/docker.asc
     mode: '0644'
   become: true
 
-- name: Add Docker apt repository
+- name: Get Suites value from os-release
+  ansible.builtin.shell: |
+    {% if ansible_distribution == 'Debian' %}
+    . /etc/os-release && echo "$VERSION_CODENAME"
+    {% else %}
+    . /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
+    {% endif %}
+  register: suites_codename
+  changed_when: false
+
+- name: Add Docker apt repository (DEB822 format)
   ansible.builtin.copy:
-    dest: /etc/apt/sources.list.d/docker.list
+    dest: /etc/apt/sources.list.d/docker.sources
     content: |
-      deb [arch={{ arch_map[ansible_architecture] }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ docker_ubuntu_codename | trim }} stable
+      Types: deb
+      URIs: https://download.docker.com/linux/{{ docker_os }}
+      Suites: {{ suites_codename.stdout | trim }}
+      Components: stable
+      Signed-By: /etc/apt/keyrings/docker.asc
     mode: '0644'
+  become: true
+
+- name: Remove old Docker repository file
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
   become: true
 
 - name: Update apt package index
